@@ -1,6 +1,13 @@
 import { rule } from "graphql-shield";
 
 export const isAuthenticated = rule()(async (parent, args, ctx, info) => {
-  // Authenticate logic is here (Verify JWT, .....).
-  return true;
-})
+  if (!ctx.user) {
+    return false;
+  }
+
+  const status = ctx?.user?.status;
+  if (status && Number(status) > 0) {
+    return true;
+  }
+  return false;
+});
