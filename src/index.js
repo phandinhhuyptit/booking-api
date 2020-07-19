@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import { ApolloServer } from "apollo-server-express";
 import depthLimit from "graphql-depth-limit";
 import compression from "compression";
+import { authMiddleware } from './external-libs/auth'
 // import get from "lodash.get";
 
 import { RedisCache } from "apollo-server-cache-redis";
@@ -74,6 +75,7 @@ async function init() {
   app.use(compression());
   app.use(cors(corsOptions));
   app.use(loggingMiddleware);
+  app.use(authMiddleware);
 
   // TODO Enable CORS
   app.use(function(req, res, next) {
