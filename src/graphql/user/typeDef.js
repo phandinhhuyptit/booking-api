@@ -2,55 +2,53 @@ import { gql } from "apollo-server-express";
 
 export default gql`
   extend type Query {
-    """
-    Find one by id
-    """
-    book(_ids: [ID!]): ResultListBookPayload
-    """
-    Filter and paging
-    """
-    books(input: FilterBookInput): PagingListBookPayload
+    user(_ids: [ID!]): ResultListUserPayload!
+    users(input: FilterUserInput): PagingListUserPayload!
   }
 
   extend type Mutation {
     """
-    Create a book
+    Create a user
     """
-    createBook(input: CreateBookInput!): ResultBookPayload
+    createUser(input: CreateUserInput!): ResultUserPayload!
+    """
+    Login  
+    """
+    login(input: LoginUserInput!): ResultLoginUserPayload!
   }
 
-  type BookPayload {
-    """
-    Book ID
-    """
+  type UserPayload {
     _id: ID!
-    """
-    Book's Title
-    """
-    title: String!
-    """
-    Year of publication
-    """
-    yearOfPublication: Date
-    """
-    Book's Author
-    """
-    author: AuthorPayload
-    """
-    Create Date
-    """
+    username: String!
+    email: String!
+    firstName: String
+    lastName: String
+    phone: Number,
+    avatar: String,
+    status: Number,
+    role: String!,
     createdAt: Date
-    """
-    Update Date
-    """
     updatedAt: Date
   }
 
-  type ResultBookPayload {
-    """
-    Status request
-    """
-    status: Int
+
+  type UserLoginPayload {
+    _id: ID!
+    username: String!
+    email: String!
+    firstName: String
+    lastName: String
+    phone: Number,
+    avatar: String,
+    status: Number,
+    role: String!,
+    createdAt: Date,
+    updatedAt: Date,
+    accessToken: String!
+    refreshToken: String!
+  }
+
+  type ResultUserPayload {
     """
     Message log request
     """
@@ -58,10 +56,21 @@ export default gql`
     """
     Data result
     """
-    data: BookPayload
+    data: UserPayload
   }
 
-  type ResultListBookPayload {
+  type ResultLoginUserPayload {
+    """
+    Message log request
+    """
+    message: String
+    """
+    Data result
+    """
+    data: UserLoginPayload
+  }
+
+  type ResultListUserPayload {
     """
     Status request
     """
@@ -73,10 +82,10 @@ export default gql`
     """
     List data result
     """
-    data: [BookPayload]
+    data: [UserPayload]
   }
 
-  type PagingListBookPayload {
+  type ResultLoginUserPayload {
     """
     Status request
     """
@@ -88,7 +97,18 @@ export default gql`
     """
     List data result
     """
-    data: [BookPayload]
+    data: [UserPayload]
+  }
+
+  type PagingListUserPayload {
+    """
+    Message log request
+    """
+    message: String
+    """
+    List data result
+    """
+    data: [UserPayload]
     """
     Total docs response
     """
@@ -103,38 +123,32 @@ export default gql`
     perPage: Int
   }
 
-  input FilterBookInput {
-    """
-    Book's Title
-    """
-    title: String
-    """
-    Year of publication
-    """
-    yearOfPublication: Date
-    """
-    Year of publication
-    """
+  input FilterUserInput {
+    username: String
+    email: String
+    firstName: String
+    lastName: String
+    phone: String
+    status: String
     perPage: Int
-    """
-    Year of publication
-    """
     pageNumber: Int
   }
 
-  input CreateBookInput {
-    """
-    Book's Title
-    """
-    title: String!
-    """
-    Year of publication
-    """
-    yearOfPublication: Date
-    """
-    Book's Author Id
-    """
-    authorId: ID
+  input CreateUserInput {
+     username : String!
+     password: String!
+     email: String! 
+     firstName: String
+     lastName: String
+     phone: String
+     avatar: String
+     status: Int
+     role: String!
   }
+
+  input LoginUserInput {
+    username : String!
+    password: String!
+ }
 
 `;

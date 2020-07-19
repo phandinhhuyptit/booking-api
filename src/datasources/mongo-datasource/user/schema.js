@@ -17,14 +17,15 @@ const schema = {
   },
   firstName: String,
   lastName: String,
-  phone: Number,
+  phone: String,
   avatar: String,
   status: {
     type: Number,
     default: 0,
   },
   role: {
-    type: Number,
+    type: String,
+    enum : ['user','admin','manager','author'],
     default: 2,
   },
   createdAt: {
