@@ -66,9 +66,9 @@ export default class DataSource extends MongoDataSource {
       const existedDoc = await this.collection.findOne({ username });
 
       if (existedDoc) {
-        throw new Error("User already used");
+        throw new ApolloError("User already used");
       }
-      password = generatePasswordHash(password);
+      password = await generatePasswordHash(password);
 
       const newDoc = new this.collection({
         username,
@@ -85,9 +85,7 @@ export default class DataSource extends MongoDataSource {
         return result;
       }
     } catch (error) {
-      result.status = 400;
-      result.message = error.message;
-      return result;
+      throw new ApolloError(error.message, 404);
     }
   }
 
@@ -103,23 +101,27 @@ export default class DataSource extends MongoDataSource {
       if (!user) {
         throw new ApolloError("User not exist", 404);
       }
-      const validated = validatePassword(password, username.password ?? "");
+
+      const validated = await validatePassword(password, user.password ?? "");
+      console.log(validated)
       if (!validated) {
         throw new ApolloError("Password not valid!", 400);
       }
 
-      const newUser = this.collection.findOneAndUpdate(
+      const newUser = await this.collection.findOneAndUpdate(
         { _id: user._id },
         { status: 1 },
         { new: true } 
-      );
+      ).lean();
+      console.log(newUser)
       const accessToken = await createAccessToken(newUser);
       const refreshToken = await createRefreshToken(newUser);
       result.data = {
-        newUser,
+        ...newUser,
         accessToken,
         refreshToken
-      }     
+      }  
+      console.log(result)   
      return result      
     } catch (error) {
       throw new ApolloError(error.message, 500);
