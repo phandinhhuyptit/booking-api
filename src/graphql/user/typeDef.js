@@ -23,9 +23,9 @@ export default gql`
     email: String!
     firstName: String
     lastName: String
-    phone: Number,
+    phone: String,
     avatar: String,
-    status: Number,
+    status: Int,
     role: String!,
     createdAt: Date
     updatedAt: Date
@@ -38,9 +38,9 @@ export default gql`
     email: String!
     firstName: String
     lastName: String
-    phone: Number,
+    phone: String,
     avatar: String,
-    status: Number,
+    status: Int,
     role: String!,
     createdAt: Date,
     updatedAt: Date,
@@ -85,20 +85,6 @@ export default gql`
     data: [UserPayload]
   }
 
-  type ResultLoginUserPayload {
-    """
-    Status request
-    """
-    status: Int
-    """
-    Message log request
-    """
-    message: String
-    """
-    List data result
-    """
-    data: [UserPayload]
-  }
 
   type PagingListUserPayload {
     """

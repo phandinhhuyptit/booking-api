@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
-import store from "../models";
+import store from "../datasources/mongo-datasource";
 require("dotenv").config();
 
 const {
