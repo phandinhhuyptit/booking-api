@@ -18,10 +18,10 @@ export default {
         const docs = await User.login(input);
         return docs;
       },
-      logout: async (_, { input },{ dataSources: { User } }) => {
-        const docs = await User.logout(input);
-        return docs;
-      }
+      // logout: async (_, { input },{ dataSources: { User } }) => {
+      //   const docs = await User.logout(input);
+      //   return docs;
+      // }
     },
     // BookPayload: {
     //   author: async ({ authorId }, args, { dataSources: { Author } }) => {

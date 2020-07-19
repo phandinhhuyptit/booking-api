@@ -1,7 +1,6 @@
 import { mergeSchemas, makeExecutableSchema } from "graphql-tools";
 import merge from "lodash.merge";
-import { typeDef as Book, resolver as BookResolver } from "./book";
-import { typeDef as Author, resolver as AuthorResolver } from "./author";
+import { typeDef as User, resolver as UserResolver } from "./user";
 
 const Query = `
   scalar Date
@@ -14,12 +13,10 @@ const Query = `
 const schema = makeExecutableSchema({
   typeDefs: [
     Query,
-    Author,
-    Book
+    User
   ],
   resolvers: merge(
-    BookResolver,
-    AuthorResolver
+    UserResolver
   )
 });
 
