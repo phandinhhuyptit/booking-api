@@ -1,28 +1,18 @@
 export default {
   Query: {
-    book: async (_, { _id }, { dataSources: { Book } }) => {
-      const doc = await Book.getOneById(_id);
+    author: async (_, { _id }, { dataSources: { Author } }) => {
+      const doc = await Author.getOneById(_id);
       return doc;
     },
-    books: async (_, { input }, { dataSources: { Book } }) => {
-      const docs = await Book.filterAndPaging(input);
+    authors: async (_, { input }, { dataSources: { Author } }) => {
+      const docs = await Author.filterAndPaging(input);
       return docs;
     }
   },
   Mutation: {
-    createBook: async (_, { input }, { dataSources: { Book } }) => {
-      const docs = await Book.create(input);
+    createAuthor: async (_, { input }, { dataSources: { Author } }) => {
+      const docs = await Author.create(input);
       return docs;
-    }
-  },
-  BookPayload: {
-    author: async ({ authorId }, args, { dataSources: { Author } }) => {
-      if (!authorId) return null;
-      const data = await Author.findOneById(
-        authorId,
-        { ttl: 120 }
-      );
-      return data;
     }
   }
 };
