@@ -22,7 +22,7 @@
     "@babel/runtime": "^7.9.6",
     "@elastic/elasticsearch": "^7.6.1",
     "apollo-datasource": "^0.7.1",
-    "apollo-server": "^2.13.1",
+    "apollo-server": "^2.14.2",
     "apollo-server-cache-redis": "^1.2.1",
     "apollo-server-errors": "^2.4.1",
     "apollo-server-express": "^2.13.1",
